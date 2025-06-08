@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "InterCalc"
 Repository = "https://github.com/niltonperimneto/InterCalc.git"
 version = "0.0.3"
-description = "A simple calculator made in Python with the GTK4 toolkit."
+description = "A simple calculator made in Python with the Qt6 toolkit."
 authors = [
     { name="Nilton Perim Neto", email="niltonperimneto@gmail.com" }
 ]
@@ -15,8 +15,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 
 dependencies = [
-    "PyGObject>=3.42",
-    "pycairo",
+    "PyQt6>=6.4",
 ]
 
 [tool.setuptools.packages.find]

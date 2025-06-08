@@ -1,11 +1,16 @@
 # -*- mode: python ; coding: utf-8 -*-
 
-    
+
 import os
 from PyInstaller.utils.hooks import collect_data_files
 
 # Collect SVG icons and other resources
-datas = collect_data_files('InterCalc', includes=['icons/*.svg'])
+# For PyQt6, just collect SVGs from the icons directory
+
+datas = [
+    ('src/icons/' + f, 'icons')
+    for f in os.listdir('src/icons') if f.endswith('.svg')
+]
 
 block_cipher = None
 
@@ -15,6 +20,15 @@ a = Analysis(
     binaries=[],
     datas=datas,
     hiddenimports=[
+        'PyQt6',
+        'PyQt6.QtCore',
+        'PyQt6.QtGui',
+        'PyQt6.QtWidgets',
+        'PyQt6.QtSvg',
+    ],
+    hookspath=[],
+    runtime_hooks=[],
+    excludes=[
         'gi',
         'gi.repository.Gtk',
         'gi.repository.Gio',
@@ -24,9 +38,6 @@ a = Analysis(
         'gi.repository.Pango',
         'gi.repository.Rsvg'
     ],
-    hookspath=[],
-    runtime_hooks=[],
-    excludes=[],
     win_no_prefer_redirects=False,
     win_private_assemblies=False,
     cipher=block_cipher
