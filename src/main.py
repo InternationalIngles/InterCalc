@@ -1,6 +1,6 @@
 import sys
 import os
-from PyQt6 import QtWidgets, QtGui, QtCore
+from PySide6 import QtWidgets, QtGui, QtCore
 
 if getattr(sys, 'frozen', False):
     BASE_DIR = sys._MEIPASS
