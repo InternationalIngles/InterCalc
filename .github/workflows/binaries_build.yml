@@ -1,0 +1,65 @@
+name: Build InterCalc
+
+on:
+  push:
+    branches:
+      - qtversion
+      - main
+
+jobs:
+  nuitka-qt-build:
+    if: startsWith(github.ref, 'refs/heads/qtversion') || startsWith(github.ref, 'refs/heads/main')
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Build Qt GUI with Nuitka
+        uses: Nuitka/Nuitka-Action@main
+        with:
+          nuitka-version: main
+          script-name: src/main.py
+          mode: onefile
+          enable-plugins: pyside6
+          output-dir: dist
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Qt-Windows-nuitka
+          path: dist/
+
+  pyinstaller-build:
+    if: startsWith(github.ref, 'refs/heads/main')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y libcairo2-dev libgirepository-2.0-dev
+          python -m pip install --upgrade pip
+          pip install --upgrade pip setuptools wheel
+          pip install pyinstaller PyGObject pycairo
+
+      - name: Package Application with PyInstaller
+        run: |
+          pyinstaller main.spec
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Linux-exe
+          path: dist/*
