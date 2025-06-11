@@ -32,6 +32,7 @@ jobs:
           mode: onefile
           enable-plugins: pyside6
           output-dir: dist
+          data-files: src/icons=icons
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
