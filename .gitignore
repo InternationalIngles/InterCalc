@@ -4,3 +4,4 @@
 /main.dist
 /main.build
 /main.onefile-build
+/__pycache__
