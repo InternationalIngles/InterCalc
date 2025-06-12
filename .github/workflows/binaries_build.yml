@@ -32,6 +32,7 @@ jobs:
           enable-plugins: pyside6
           output-dir: dist
           include-data-dir: src/icons=icons
+          windows-console-mode: disable
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
