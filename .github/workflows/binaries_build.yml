@@ -33,6 +33,7 @@ jobs:
           output-dir: dist
           include-data-dir: src/icons=icons
           windows-console-mode: disable
+          windows-icon: src/icons/logo.ico
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
